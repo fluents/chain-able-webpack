@@ -1,0 +1,24 @@
+{
+  "name": "chain-able-webpack",
+  "version": "3.2.0",
+  "main": "src/Config.js",
+  "repository": "mozilla-neutrino/webpack-chain",
+  "keywords": ["webpack", "config", "chain", "fluent", "api"],
+  "files": ["src"],
+  "author": "Eli Perelman <eli@eliperelman.com>",
+  "license": "MPL-2.0",
+  "scripts": {
+    "test:order": "ava test 'test/Order.js' --verbose",
+    "test": "ava --verbose"
+  },
+  "dependencies": {
+    "chain-able": "^3.0.0"
+  },
+  "devDependencies": {
+    "ava": "^0.19.1",
+    "fliplog": "^0.3.13",
+    "happypack2": "*",
+    "immutable": "^3.8.1",
+    "mori": "^0.3.2"
+  }
+}
