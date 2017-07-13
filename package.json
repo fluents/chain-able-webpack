@@ -1,18 +1,10 @@
 {
   "name": "chain-able-webpack",
-  "version": "3.2.0",
+  "version": "4.0.0",
   "main": "src/Config.js",
   "repository": "mozilla-neutrino/webpack-chain",
-  "keywords": [
-    "webpack",
-    "config",
-    "chain",
-    "fluent",
-    "api"
-  ],
-  "files": [
-    "src"
-  ],
+  "keywords": ["webpack", "config", "chain", "fluent", "api"],
+  "files": ["src"],
   "author": "Eli Perelman <eli@eliperelman.com>",
   "license": "MPL-2.0",
   "scripts": {
