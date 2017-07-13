@@ -1,5 +1,5 @@
 const {basename, dirname, resolve} = require('path')
-const {ChainedMap, ChainedSet} = require('./Chains')
+const {ChainedMap, ChainedSet, clean} = require('./Chains')
 const Resolve = require('./Resolve')
 const ResolveLoader = require('./ResolveLoader')
 const Output = require('./Output')
@@ -15,8 +15,7 @@ class Entry extends ChainedSet {
 
     if (Array.isArray(path)) {
       path = path.map(rel => resolve(this.parent.get('dir'), rel))
-    }
-    else {
+    } else {
       path = resolve(this.parent.get('dir'), path)
     }
 
@@ -62,7 +61,7 @@ module.exports = class extends ChainedMap {
     }
 
     const entry = this.entryPoints.get(name)
-    // entry.output = this.output
+    entry.output = this.output
     return entry
   }
 
@@ -78,7 +77,7 @@ module.exports = class extends ChainedMap {
     this.delete('dir')
     const entryPoints = this.entryPoints.entries() || {}
 
-    return this.clean(
+    return clean(
       Object.assign(this.entries() || {}, {
         node: this.node.entries(),
         output: this.output.entries(),
@@ -163,12 +162,10 @@ module.exports = class extends ChainedMap {
             if (includes) {
               this.entryPoints = new ChainedMap(this)
               return this.entry(name).merge([value])
-            }
-            else {
+            } else {
               return this.entry(name).merge([value])
             }
-          }
-          else if (Array.isArray(value)) {
+          } else if (Array.isArray(value)) {
             // console.log({value}, '____________WASARRAY')
             return value.forEach(val => {
               this.entry('index').add(val)
@@ -198,8 +195,7 @@ module.exports = class extends ChainedMap {
               // if Class, default Plugin.init will instantiate it
               if (toString.call(plugin) === '[object Function]') {
                 this.plugin(plugin.name).plugin(plugin)
-              }
-              else {
+              } else {
                 // otherwise, it is already instantiated
                 this.plugin(plugin.name).init(args => plugin)
               }

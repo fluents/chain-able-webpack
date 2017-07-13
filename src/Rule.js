@@ -1,4 +1,5 @@
-const {ChainedMap, ChainedSet} = require('./Chains')
+const {ChainedMap, ChainedSet, clean, matcher} = require('./Chains')
+const isMatcher = require('chain-able/src/deps/is/matcher')
 const Use = require('./Use')
 
 module.exports = class extends ChainedMap {
@@ -17,6 +18,9 @@ module.exports = class extends ChainedMap {
     this.extend(['parser', 'test', 'enforce'])
   }
 
+  // enforce(arg) {
+  //   return this.set('enforce', arg)
+  // }
   prepend(name) {
     // const uses = this.uses
     // .entries()
@@ -44,8 +48,7 @@ module.exports = class extends ChainedMap {
   include(args) {
     if (Array.isArray(args)) {
       args.forEach(arg => this.included.add(arg))
-    }
-    else {
+    } else {
       this.included.add(args)
     }
 
@@ -54,8 +57,7 @@ module.exports = class extends ChainedMap {
   exclude(args) {
     if (Array.isArray(args)) {
       args.forEach(arg => this.excluded.add(arg))
-    }
-    else {
+    } else {
       this.excluded.add(args)
     }
 
@@ -79,7 +81,10 @@ module.exports = class extends ChainedMap {
   }
 
   toConfig() {
-    return this.clean(
+    delete this.parent
+    // require('fliplog').quick(this)
+    // require('fliplog').quick(clean(this.entries()), this.entries())
+    return clean(
       Object.assign(this.entries() || {}, {
         include: this.included.values(),
         exclude: this.excluded.values(),
@@ -105,7 +110,7 @@ module.exports = class extends ChainedMap {
         }
 
         case 'test': {
-          return this.test(value instanceof RegExp ? value : new RegExp(value))
+          return this.test(isMatcher(value) ? value : matcher.make(value))
         }
 
         default: {

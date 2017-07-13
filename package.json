@@ -3,8 +3,16 @@
   "version": "3.2.0",
   "main": "src/Config.js",
   "repository": "mozilla-neutrino/webpack-chain",
-  "keywords": ["webpack", "config", "chain", "fluent", "api"],
-  "files": ["src"],
+  "keywords": [
+    "webpack",
+    "config",
+    "chain",
+    "fluent",
+    "api"
+  ],
+  "files": [
+    "src"
+  ],
   "author": "Eli Perelman <eli@eliperelman.com>",
   "license": "MPL-2.0",
   "scripts": {
@@ -12,7 +20,8 @@
     "test": "ava --verbose"
   },
   "dependencies": {
-    "chain-able": "^3.0.0"
+    "chain-able": "^4.0.0",
+    "webpack": "^3.2.0"
   },
   "devDependencies": {
     "ava": "^0.19.1",

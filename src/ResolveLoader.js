@@ -1,4 +1,4 @@
-const {ChainedMap, ChainedSet, dopemerge} = require('./Chains')
+const {ChainedMap, ChainedSet, merge, clean} = require('./Chains')
 
 module.exports = class extends ChainedMap {
   constructor(parent) {
@@ -10,7 +10,7 @@ module.exports = class extends ChainedMap {
   }
 
   toConfig() {
-    return this.clean(
+    return clean(
       Object.assign(
         {
           extensions: this.extensions.values(),
@@ -37,9 +37,8 @@ module.exports = class extends ChainedMap {
 
         default: {
           if (this.has(key)) {
-            this.set(key, dopemerge(this.get(key), value))
-          }
-          else {
+            this.set(key, merge(this.get(key), value))
+          } else {
             this.set(key, value)
           }
         }

@@ -1,4 +1,4 @@
-const {ChainedMap, dopemerge} = require('./Chains')
+const {ChainedMap, merge, clean} = require('./Chains')
 
 module.exports = class extends ChainedMap {
   constructor(parent) {
@@ -22,13 +22,13 @@ module.exports = class extends ChainedMap {
     }
 
     if (obj.options) {
-      this.options(dopemerge(this.store.get('options') || {}, obj.options))
+      this.options(merge(this.store.get('options') || {}, obj.options))
     }
 
     return this
   }
 
   toConfig() {
-    return this.clean(this.entries() || {})
+    return clean(this.entries() || {})
   }
 }

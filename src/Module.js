@@ -1,4 +1,4 @@
-const {ChainedMap} = require('./Chains')
+const {ChainedMap, clean} = require('./Chains')
 const Rule = require('./Rule')
 
 module.exports = class extends ChainedMap {
@@ -20,7 +20,7 @@ module.exports = class extends ChainedMap {
   }
 
   toConfig() {
-    return this.clean(
+    return clean(
       Object.assign(this.entries() || {}, {
         rules: this.rules.values().map(r => r.toConfig()),
       })

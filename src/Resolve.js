@@ -1,4 +1,4 @@
-const {ChainedMap, ChainedSet, dopemerge} = require('./Chains')
+const {ChainedMap, ChainedSet, merge, clean} = require('./Chains')
 const Plugin = require('./Plugin')
 
 module.exports = class extends ChainedMap {
@@ -30,7 +30,7 @@ module.exports = class extends ChainedMap {
   }
 
   toConfig() {
-    return this.clean(
+    return clean(
       Object.assign(this.entries() || {}, {
         alias: this.alias.entries(),
         aliasFields: this.aliasFields.values(),
@@ -62,9 +62,8 @@ module.exports = class extends ChainedMap {
 
         default: {
           if (this.has(key)) {
-            this.set(key, dopemerge(this.get(key), value))
-          }
-          else {
+            this.set(key, merge(this.get(key), value))
+          } else {
             this.set(key, value)
           }
         }

@@ -8,7 +8,7 @@ test('is Chainable', t => {
   t.is(output.end(), parent)
 })
 
-test('shorthand methods', t => {
+test.skip('shorthand methods', t => {
   const output = new Output()
   const obj = {}
 
